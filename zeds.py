@@ -20,15 +20,14 @@ import subprocess #  Update info
 
 from time import gmtime, strftime
 
-_sAuthor				 = "MrHawy"
+_sAuthor         = "MrHawy"
 _sCurrentOS      = platform.system() + ' ' + platform.release() 
 _sCurrentTime    = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 _sCurrentVersion = "0.2"
 _sCurrentYear    = "2014"
 _sCurrentUser    = getpass.getuser()
 
-_lSafeHosts = ['#','127.0.0.1localhost','255.255.255.255broadcasthost',
-								'::1localhost','fe80::1%lo0localhost']
+_lSafeHosts = ['#','127.0.0.1localhost','255.255.255.255broadcasthost','::1localhost','fe80::1%lo0localhost']
 
 _lSafeSystemAgents = ['com.apple.accountsd.plist',
 'com.apple.AddressBook.abd.plist',
@@ -1583,8 +1582,7 @@ def bin():
     print 'B1 - [/usr/local/bin] ' + f  
 
 def safari_start():
-  f = biplist.readPlist("/Users/" + _sCurrentUser + 
-  												"/Library/Preferences/com.apple.Safari.plist")
+  f = biplist.readPlist("/Users/" + _sCurrentUser + "/Library/Preferences/com.apple.Safari.plist")
   print 'S0 - [LastOSVersionSafariWasLaunchedOn] ' + f["LastOSVersionSafariWasLaunchedOn"]
   print 'S0 - [NewestLaunchedSafariVersion] ' + f["NewestLaunchedSafariVersion"]
   print 'S0 - [HomePage] ' + f["HomePage"]
