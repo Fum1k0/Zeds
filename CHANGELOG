@@ -1,0 +1,14 @@
+Revision history for Zeds
+
+0.2 - 14/11/2014
+
+	- Add Update verification
+	- Add Deamons listing
+	- Add Agents listing + Whitelist
+	- Add Apps listing with the simplest verification ever
+	- Add /usr/bin listing + Whitelist
+	- Add /usr/local/bin listing
+
+0.1 - 13/11/2014
+
+	- Original version
