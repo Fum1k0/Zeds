@@ -1,13 +1,9 @@
 Zeds
 ====
-
 Browser Analyzer - Inspect specific files/directories for suspicious malware activities
-
 ====
-
--> Required
+* Required
 - biplist lib
-
 ====
 
 
