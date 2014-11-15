@@ -1,12 +1,12 @@
 NAME
-  Zeds - Mac OSX Diagnostic tool
+- Zeds - Mac OSX Diagnostic tool
 
 DESCRIPTION
-  Zeds is a useful tool to analyze the operating systems and give a first & 
-  quick diagnostic of potential suspicious activities (malwares ...).  
+- Zeds is a useful tool to analyze the operating systems and give a first & quick diagnostic of potential suspicious activities 
 
 REQUIEREMENT
-  python 2.7.x
-  biplist python library
+- A mac :)
+- python 2.7.x
+- biplist python library
 
 
