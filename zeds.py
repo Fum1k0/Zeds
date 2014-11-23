@@ -5,6 +5,7 @@
 
 # I'M NOT RESPONSIBLE FOR YOURS ACTS
 
+# R0 -> Startup Items 
 # L0 -> Agents
 # L1 -> Daemons
 # H0 -> Hosts
@@ -23,7 +24,7 @@ from time import gmtime, strftime
 _sAuthor         = "MrHawy"
 _sCurrentOS      = platform.system() + ' ' + platform.release() 
 _sCurrentTime    = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-_sCurrentVersion = "0.2"
+_sCurrentVersion = "0.3"
 _sCurrentYear    = "2014"
 _sCurrentUser    = getpass.getuser()
 
@@ -1488,6 +1489,10 @@ _lSafeUserBin = ['2to3',
 'znew',
 'zprint']
 
+_lSafeUsersShared = ['.localized',
+'Library',
+'SC Info']
+
 def darwin():
   if not 'Darwin' in _sCurrentOS:
     print 'ERROR - MacOSX Only...' # Oh boy !
@@ -1529,10 +1534,15 @@ def hosts():
       if bWhiteList == False:
         print 'N0 - HOSTS: ' + sLine
 
+
+def startup_item():
+  for f in os.listdir('/Library/StartupItems/'):
+    print 'R0 - [/Library/StartupItems] ' + f
+
 def agents():
   # Administrator Agents
   for f in os.listdir('/Library/LaunchAgents/'):
-    print 'L0 - [/Library/LaunchAgents] ' + f
+    print 'A0 - [/Library/LaunchAgents] ' + f
     
   # User Agents
   for f in os.listdir("/Users/" + _sCurrentUser + "/Library/LaunchAgents/"):
@@ -1565,9 +1575,9 @@ def apps():
   for f in os.listdir("/Applications/"):
     if not '.DS_Store' in f and not '.localized' in f:
       if 'MacD' in f or 'MacPr' in f or 'Mac D' in f or 'MacSw' in f or 'Mac P' in f:
-        print 'S1 - [Applications] ' + f + ' <- SUSPICIOUS'
+        print 'A1 - [Applications] ' + f + ' <- SUSPICIOUS'
       else:
-        print 'S1 - [Applications] ' + f
+        print 'A0 - [Applications] ' + f
 
 def bin():
   for f in os.listdir("/usr/bin/"):
@@ -1581,6 +1591,15 @@ def bin():
   for f in os.listdir("/usr/local/bin"):
     print 'B1 - [/usr/local/bin] ' + f  
 
+def shared():
+  for f in os.listdir("/Users/Shared/"):
+    bFound = False
+    for sWhiteList in _lSafeUsersShared:
+      if sWhiteList in f:
+        bFound = True	
+    if bFound == False:
+      print 'O1 - [/Users/Shared/] ' + f 
+
 def safari_start():
   f = biplist.readPlist("/Users/" + _sCurrentUser + "/Library/Preferences/com.apple.Safari.plist")
   print 'S0 - [LastOSVersionSafariWasLaunchedOn] ' + f["LastOSVersionSafariWasLaunchedOn"]
@@ -1591,8 +1610,7 @@ def safari_plugins():
   for f in os.listdir("/Library/Internet Plug-Ins/"):
     print 'S1 - [/Library/Internet Plug-Ins] ' + f
 
-  for f in os.listdir("/Users/" + _sCurrentUser + 
-  											"/Library/Safari/Extensions/"):
+  for f in os.listdir("/Users/" + _sCurrentUser + "/Library/Safari/Extensions/"):
     if not 'Extensions.plist' in f:
       print 'S2 - [~/Library/Safari/Extensions/] ' + f
 
@@ -1602,13 +1620,14 @@ def main():
   # update()
   print '-----------------------------------------------------------------------'
   agents()
+  print '-----------------------------------------------------------------------'
   daemons()
   print '-----------------------------------------------------------------------'
   apps()
   print '-----------------------------------------------------------------------'
   bin()
   print '-----------------------------------------------------------------------'
-  hosts()
+  shared()
   print '-----------------------------------------------------------------------'
   safari_start()
   safari_plugins()
