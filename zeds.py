@@ -21,11 +21,11 @@ import subprocess #  Update info
 
 from time import gmtime, strftime
 
-_sAuthor         = "MrHawy"
-_sCurrentOS      = platform.system() + ' ' + platform.release() 
+_sAuthor         = "Ikes"
+_sCurrentOS      = platform.system() + ' ' + platform.mac_ver()[0]
 _sCurrentTime    = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-_sCurrentVersion = "0.4"
-_sCurrentYear    = "2014"
+_sCurrentVersion = "0.5"
+_sCurrentYear    = "2015"
 _sCurrentUser    = getpass.getuser()
 
 _lSafeHosts         = []
@@ -87,6 +87,7 @@ def init():
   print '    User : ' + _sCurrentUser
   print '    Time : ' + _sCurrentTime 
   print '      OS : ' + _sCurrentOS
+  print '    Arch : ' + platform.mac_ver()[2]
   print ''
 
 def update():
@@ -126,9 +127,9 @@ def agents():
   for f in os.listdir('/Library/LaunchAgents/'):
     print 'A0 - [/Library/LaunchAgents] ' + f
     
-  # User Agents
+  # Launch Agents
   for f in os.listdir("/Users/" + _sCurrentUser + "/Library/LaunchAgents/"):
-    print 'L0 - [~/Library/LaunchAgents] ' + f
+    print 'A1 - [~/Library/LaunchAgents] ' + f
 
   # System Agents  
   for f in os.listdir('/System/Library/LaunchAgents/'):
@@ -137,12 +138,12 @@ def agents():
       if sWhiteList in f:
         bFound = True	
     if bFound == False:
-      print 'L0 - [/System/Library/LaunchAgents] ' + f
+      print 'A2 - [/System/Library/LaunchAgents] ' + f
 
 def daemons():
   # Administrator Deamons
   for f in os.listdir('/Library/LaunchDaemons/'):
-    print 'L1 - [/Library/LaunchDaemons] ' + f
+    print 'D0 - [/Library/LaunchDaemons] ' + f
 
   # System Agents  
   for f in os.listdir('/System/Library/LaunchDaemons/'):
@@ -151,7 +152,7 @@ def daemons():
       if sWhiteList in f:
         bFound = True	
     if bFound == False:
-      print 'L1 - [/System/Library/LaunchDaemons] ' + f
+      print 'D1 - [/System/Library/LaunchDaemons] ' + f
 
 def apps():
   for f in os.listdir("/Applications/"):
@@ -160,6 +161,15 @@ def apps():
         print 'A1 - [Applications] ' + f + ' <- SUSPICIOUS'
       else:
         print 'A0 - [Applications] ' + f
+
+def library():
+  for f in os.listdir("/Library/"):
+    if not '.DS_Store' in f and not '.localized' in f:
+      print 'L0 - [Library] ' + f
+
+  for f in os.listdir("/Library/Application Support/"):
+    if not '.DS_Store' in f and not '.localized' in f:
+      print 'A1 - [/Library/Application Support/] ' + f
 
 def bin():
   for f in os.listdir("/usr/bin/"):
@@ -207,6 +217,8 @@ def main():
   agents()
   print '-----------------------------------------------------------------------'
   daemons()
+  print '-----------------------------------------------------------------------'
+  library()
   print '-----------------------------------------------------------------------'
   apps()
   print '-----------------------------------------------------------------------'
